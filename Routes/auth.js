@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/', verify,async (req, res) => {
     const userObject = await UserModel.findOne({_id: req.user._id}, '-password')
-    res.json({ok: true, code: 200, object: userObject});
+    res.send({ok: true, code: 200, object: userObject});
 })
 
 module.exports = router;
