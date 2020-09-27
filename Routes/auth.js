@@ -3,6 +3,7 @@ const UserModel = require('../model/User')
 const { registerValidation, loginValidation } = require('./validation');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const verify = require('./verifyToken')
 
 router.post('/register' , async(req, res) => {
     //validation
@@ -68,6 +69,11 @@ router.post('/login', async (req, res) => {
     //create JWT
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
     res.header('auth-token', token).send({ok: true, status: 200})
+})
+
+router.get('/', verify,async (req, res) => {
+    const userObject = await UserModel.findOne({_id: req.user._id}, '-password')
+    res.json({ok: true, code: 200, object: userObject});
 })
 
 module.exports = router;
