@@ -12,6 +12,13 @@ router.post('/register' , async(req, res) => {
             code: 400,
             msg: error.details[0].message
         })
+    //are passwords similar
+    if (req.body.password !== req.body.password2)
+        return res.status(400).send({
+            error: true,
+            code: 400,
+            msg: "passwords are not the same"
+        })
     //is similar email in DB
     const emailExists = await UserModel.findOne({email: req.body.email})
     if (emailExists) return res.status(400).send({
