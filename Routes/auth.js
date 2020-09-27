@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const UserModel = require('../model/User')
-const { registerValidation } = require('./validation');
-const bcrypt = require('bcryptjs')
+const { registerValidation, loginValidation } = require('./validation');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 router.post('/register' , async(req, res) => {
     //validation
@@ -42,8 +43,31 @@ router.post('/register' , async(req, res) => {
     }
 })
 
-router.post('/login', (req, res) => {
-    res.send('login')
+router.post('/login', async (req, res) => {
+    const {error} = loginValidation(req.body);
+    if (error)
+        return res.status(400).send({
+            error: true,
+            code: 400,
+            msg: error.details[0].message
+        })
+    //is user
+    const user = await UserModel.findOne({email: req.body.email})
+    if (!user) return res.status(400).send({
+        error: true,
+        code: 400,
+        msg: 'Email is not found'
+    })
+    //isPasswordCorrect
+    const validPassword = await bcrypt.compare(req.body.password, user.password)
+    if (!validPassword) return res.status(400).send({
+        error: true,
+        code: 400,
+        msg: 'Email or Password is wrong'
+    })
+    //create JWT
+    const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+    res.header('auth-token', token).send({ok: true, status: 200})
 })
 
 module.exports = router;
