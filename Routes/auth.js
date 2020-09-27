@@ -38,7 +38,9 @@ router.post('/register' , async(req, res) => {
     })
     try{
         const savedUser = await user.save();
-        res.send({ok: true, status: 200, userId: savedUser._id});
+        const userObject = await UserModel.findOne({_id: savedUser._id}, '-password')
+        const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+        res.send({ok: true, status: 200, user: userObject, jwt: token});
     }catch (e) {
         res.status(400).send(e)
     }
@@ -68,7 +70,8 @@ router.post('/login', async (req, res) => {
     })
     //create JWT
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send({ok: true, status: 200})
+    const userObject = await UserModel.findOne({_id: user._id}, '-password')
+    res.send({ok: true, status: 200, user: userObject, jwt: token});
 })
 
 router.get('/', verify,async (req, res) => {
