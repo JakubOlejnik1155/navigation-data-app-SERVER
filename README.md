@@ -9,7 +9,7 @@
 * [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 * [dotenv](https://www.npmjs.com/package/dotenv)
 
-#breakpoints:
+# breakpoints:
 * **POST `/api/user/register`**
 	- regiter user in database. 
 Request body sample:
@@ -24,39 +24,39 @@ Request body sample:
 	- User login breakpont. User gets JWT after logging in.
 Request body sample:
 ```javascript 
-	req.body = {
-		email: "sample.email@domain.com",
-		password: "samplePassword"
-	};
+    req.body = {
+        email: "sample.email@domain.com",
+        password: "samplePassword"
+    };
 ```
 * **GET `/api/user`**
 	- Get user Information. priavte breakpoint. <br>User needs to pass JWT (Json Web Token) to use this path
 ```javascript 
 	 fetchOptions = {
-            method: 'GET',
-            headers: {
-                'auth-token': userJWT
-            }
-        };
+        method: 'GET',
+        headers: {
+            'auth-token': userJWT
+        }
+    };
 ```
 * **PATCH `/api/user`**
 	- Breakpoint to synchronize offline data and online data connected to logged in user. priavte breakpoint. User needs to pass JWT (Json Web Token) to use this path
 ```javascript 
 //fetch options
 	 fetchOptions = {
-            method: 'PATCH',
-            headers: {
-                'auth-token': userJWT,
-				'Content-Type: "application/json"
-            },
-			body: JSON.stringify(data)
-        };
+        method: 'PATCH',
+        headers: {
+            'auth-token': userJWT,
+            'Content-Type: "application/json"
+        },
+        body: JSON.stringify(data)
+    };
 //body sample
-body: {
-  		"log":31073257,
-  		"harborsArray": userHarborsArray,
-  		"tripsArray": userTripsArray
-}
+    body: {
+        "log":31073257,
+        "harborsArray": userHarborsArray,
+        "tripsArray": userTripsArray
+    }
 ```
 * **DELETE `/api/harbor/:name`**
 	- Breakpoint to delete harbor from DB. Priavte route.
