@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 const UserModel = require('../model/User');
 const verify = require('./verifyToken')
 

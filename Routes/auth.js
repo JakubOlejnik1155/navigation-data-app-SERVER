@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
 const UserModel = require('../model/User')
 const { registerValidation, loginValidation } = require('./validation');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const verify = require('./verifyToken')
 
 //register new user

@@ -10,6 +10,7 @@ const pos = new mongoose.Schema({
         required: true
     }
 })
+
 const harbor = new mongoose.Schema({
     name:{
         type: String
@@ -49,7 +50,6 @@ const trip = new mongoose.Schema({
         required: true,
     }
 })
-
 
 const userSchema = new mongoose.Schema({
     email: {
