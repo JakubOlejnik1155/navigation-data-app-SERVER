@@ -32,18 +32,18 @@ Request body sample:
 * **GET `/api/user`**
 	- Get user Information. priavte breakpoint. <br>User needs to pass JWT (Json Web Token) to use this path
 ```javascript 
-	 fetchOptions = {
-        method: 'GET',
-        headers: {
-            'auth-token': userJWT
-        }
-    };
+fetchOptions = {
+    method: 'GET',
+    headers: {
+        'auth-token': userJWT
+    }
+};
 ```
 * **PATCH `/api/user`**
 	- Breakpoint to synchronize offline data and online data connected to logged in user. priavte breakpoint. User needs to pass JWT (Json Web Token) to use this path
 ```javascript 
 //fetch options
-	 fetchOptions = {
+    fetchOptions = {
         method: 'PATCH',
         headers: {
             'auth-token': userJWT,
