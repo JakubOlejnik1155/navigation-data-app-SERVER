@@ -1,14 +1,11 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const app = express();
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const authRoutes = require('./Routes/auth');
 const deleteRoutes = require('./Routes/delete')
 
-
-const app = express();
-app.use(express.json());
-app.use(cors())
 dotenv.config();
 
 mongoose.connect(process.env.DB_CONNECT,
@@ -16,10 +13,13 @@ mongoose.connect(process.env.DB_CONNECT,
     ,()=>{
     console.log("Connected to DB")
 })
-
+app.use(express.json());
+app.use(cors())
+app.use(express.static('build', {}))
 //routes middlewares
 app.use('/api/user', authRoutes);
 app.use('/api', deleteRoutes);
+app.use('*',express.static('build',{}));
 
 //start server
-app.listen(5000, ()=>console.log("Server running"))
+app.listen(3000, ()=>console.log("Server running"))
